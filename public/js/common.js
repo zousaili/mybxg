@@ -16,11 +16,10 @@
             }
 
            });
-       });
-     //获取请求的路径
+       });7
     var pathname=location.pathname;
     //判断用户是否已经登录要通过PHPSESSID判断
-    if(pathname!='/login'&&!$.cookie('PHPSESSID')){
+    if(pathname!='/login'&&!$.cookie('PHPSESSID'
         //没有登录的情况要重新跳转到登录页面
         location.href="/login";
       }
