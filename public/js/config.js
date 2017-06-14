@@ -8,7 +8,8 @@ requirejs.config({
         template:'artTemplate/template-web',
         //通用的js文件
         common:'../js/common',
-        login:'../js/login'
+        login:'../js/login',
+        tealist:'../js/teacher-list'
 
 
     },
