@@ -26,4 +26,7 @@ define(['jquery','cookie'],function($){
         //阻止submit的默认提交事件
         return false;
     });
+    
+
+
 });
