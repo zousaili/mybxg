@@ -1,4 +1,4 @@
-  define(['jquery','cookie'],function($){
+  define(['jquery','template','cookie'],function($,template){
     //控制左侧菜单的展开和折叠
     $('.navs ul').prev('a').on('click', function () {
         $(this).next().slideToggle();
@@ -16,10 +16,10 @@
             }
 
            });
-       });7
+       });
     var pathname=location.pathname;
     //判断用户是否已经登录要通过PHPSESSID判断
-    if(pathname!='/login'&&!$.cookie('PHPSESSID'
+    if(pathname!='/login'&&!$.cookie('PHPSESSID')){
         //没有登录的情况要重新跳转到登录页面
         location.href="/login";
       }
@@ -27,9 +27,16 @@
      //JSON.parse 用于将JSON字符串转化为对象
      var loginInfo=$.cookie('loginInfo')&&JSON.parse($.cookie('loginInfo'));
       if(loginInfo){
-          //渲染页面
-          $('.aside .profile').find('img').attr('src',loginInfo.tc_avatar);
-          $('.aside .profile').find('h4').text(loginInfo.tc_name);
+        var loginTpl='<div class="avatar img-circle"><img src="{{tc_avatar}}"></div><h4>{{tc_name}}</h4>';
+           //渲染页面
+            var html=template.render(loginTpl,loginInfo);
+            $('#loginInfoTpl').html(html);
+               
+            
+           
+          // //渲染页面
+          // $('.aside .profile').find('img').attr('src',loginInfo.tc_avatar);
+          // $('.aside .profile').find('h4').text(loginInfo.tc_name);
       }
       
         // console.dir(location);//location是dom对象
