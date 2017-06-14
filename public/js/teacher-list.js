@@ -8,7 +8,16 @@ define(['jquery','template','bootstrap'],function($,template){
             //解析模板，填充数据
              var html=template('teacherInfoTpl',{list:data.result});
              $('#teacherInfo').html(html);
-             //渲染模板之后，绑定查看讲师信息的单击事件
+             //查看讲师功能
+            previewTeacher();
+           //启用和启用讲师
+           enableOrDisableTeacher();
+        }
+    });
+
+    //查看讲师功能
+    function previewTeacher(){
+         //渲染模板之后，绑定查看讲师信息的单击事件
              $('#teacherInfo').find('.preview').click(function(){
                 //获取每个讲师的id
                      var tcId=$(this).closest('td').attr('data-id');
@@ -19,6 +28,7 @@ define(['jquery','template','bootstrap'],function($,template){
                         data:{tc_id:tcId},
                         dataType:'json',
                         success:function(data){
+                            //处理籍贯中间的竖线
                              // data.result.tc_hometown= data.result.tc_hometown.replace(/[|]/g,' ');
                                // data.result.tc_hometown= data.result.tc_hometown.replace(/\|/g,' ');
                                 data.result.tc_hometown= data.result.tc_hometown.split('|').join(" ");
@@ -31,6 +41,35 @@ define(['jquery','template','bootstrap'],function($,template){
                      });
                      return false;
              });
-        }
-    });
+    }
+   //注销和启用讲师功能
+  function enableOrDisableTeacher(){
+      $('#teacherInfo').find('.edteacher').click(function(){
+        var that=this;
+         //获取每个讲师的id,
+         var td=$(this).closest('td');
+        var tcId=td.attr('data-id');
+        var tcStatus=td.attr('data-status');
+         $.ajax({
+            type:'post',
+            url:'/api/teacher/handle',
+            data:{tc_id:tcId,tc_status:tcStatus},
+            dataType:'json',
+            success:function(data){
+                 if(data.code==200){
+                    // 执行成功之后，将状态值改为返回的状态
+                       td.attr('data-status',data.result.tc_status);
+                       if(data.result.tc_status==0){
+                            $(that).text('注销');
+                       }else{
+                         $(that).text('启用');
+                       }
+                 }
+            }
+
+         });
+      });
+  }
+
+
 });
