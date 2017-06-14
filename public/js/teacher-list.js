@@ -12,12 +12,16 @@ define(['jquery','template','bootstrap'],function($,template){
              $('#teacherInfo').find('.preview').click(function(){
                 //获取每个讲师的id
                      var tcId=$(this).closest('td').attr('data-id');
+                     //根据id发送请求
                      $.ajax({
                         type:'get',
                         url:'/api/teacher/view',
                         data:{tc_id:tcId},
                         dataType:'json',
                         success:function(data){
+                             // data.result.tc_hometown= data.result.tc_hometown.replace(/[|]/g,' ');
+                               // data.result.tc_hometown= data.result.tc_hometown.replace(/\|/g,' ');
+                                data.result.tc_hometown= data.result.tc_hometown.split('|').join(" ");
                               //显示弹窗
                               $('#teacherModal').modal();
                                var html=template('teacherModalInfoTpl',data.result);
