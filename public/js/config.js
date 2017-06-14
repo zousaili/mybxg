@@ -9,7 +9,9 @@ requirejs.config({
         //通用的js文件
         common:'../js/common',
         login:'../js/login',
-        tealist:'../js/teacher-list'
+        tealist:'../js/teacher-list',
+        index:'../js/index',
+        until:'../js/until'
 
 
     },

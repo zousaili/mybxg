@@ -1,4 +1,11 @@
-define(['jquery','template','bootstrap'],function($,template){
+define(['jquery','template','until','bootstrap'],function($,template,until){
+  // for(var key in location){
+  //    console.log(location[key]);
+  // }
+//设置导航菜单选中
+   until.setMenu(location.pathname);
+
+
     //加载 列表数据
     $.ajax({
         type:'get',
